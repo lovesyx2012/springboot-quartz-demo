@@ -1,5 +1,6 @@
 package com.zisuye.springboot.quartz.demo.service.impl;
 
+import com.zisuye.springboot.quartz.demo.constant.JobConstant;
 import com.zisuye.springboot.quartz.demo.dto.base.ResultCode;
 import com.zisuye.springboot.quartz.demo.dto.request.SchedulerAddDTO;
 import com.zisuye.springboot.quartz.demo.dto.request.SchedulerBaseDTO;
@@ -42,14 +43,14 @@ public class SchedulerServiceImpl implements SchedulerService {
           schedulerAddDTO.getJobName() + "." + schedulerAddDTO.getJobGroupName() + "已经存在");
     }
     switch (schedulerAddDTO.getJobType()) {
-      case 1:
+      case JobConstant.JOB_TYPE_ONCE:
         simpleJobUtils.addOneTimeJob(
             PlanJobHandler.class, schedulerAddDTO.getJobName(),
             schedulerAddDTO.getJobGroupName(), schedulerAddDTO.getTriggerTime(),
             setParamMap(schedulerAddDTO.getServerName(), schedulerAddDTO.getJobParam(),
                 schedulerAddDTO.getUrlContext()));
         break;
-      case 2:
+      case JobConstant.JOB_TYPE_CRON:
         simpleJobUtils
             .addRepeatJob(PlanJobHandler.class, schedulerAddDTO.getJobName(),
                 schedulerAddDTO.getJobGroupName(),
@@ -59,7 +60,7 @@ public class SchedulerServiceImpl implements SchedulerService {
                 setParamMap(schedulerAddDTO.getServerName(), schedulerAddDTO.getJobParam(),
                     schedulerAddDTO.getUrlContext()));
         break;
-      case 3:
+      case JobConstant.JOB_TYPE_CRON_EXPRESS:
         cronJobUtils.addJob(PlanJobHandler.class, schedulerAddDTO.getJobName(),
             schedulerAddDTO.getJobGroupName(),
             schedulerAddDTO.getCronExpress(), schedulerAddDTO.getStartTime(),
@@ -116,13 +117,13 @@ public class SchedulerServiceImpl implements SchedulerService {
   //检验参数  //2：每天   3.每小时  4.每分钟
   private void checkParam(SchedulerAddDTO schedulerAddDTO) {
     Integer getJobType = schedulerAddDTO.getJobType();
-    if (Objects.equals(getJobType, 1)) {
+    if (Objects.equals(getJobType, JobConstant.JOB_TYPE_ONCE)) {
       //单次任务  triggerTime 不能为空
       if (Objects.isNull(schedulerAddDTO.getTriggerTime())) {
         QuartzInvokeException.build(ResultCode.INVALID_ARGS.getCode(), "结束时间为空");
       }
     }
-    if (Objects.equals(schedulerAddDTO, 2)) {
+    if (Objects.equals(schedulerAddDTO, JobConstant.JOB_TYPE_CRON)) {
       //多次任务  triggerTime endTime  interval intervalUnit 不能为空
       if (Objects.isNull(schedulerAddDTO.getTriggerTime())) {
         QuartzInvokeException.build(ResultCode.INVALID_ARGS.getCode(), "触发时间为空");
@@ -138,7 +139,7 @@ public class SchedulerServiceImpl implements SchedulerService {
       }
 
     }
-    if (Objects.equals(schedulerAddDTO.getJobType(), 3)) {
+    if (Objects.equals(schedulerAddDTO.getJobType(), JobConstant.JOB_TYPE_CRON_EXPRESS)) {
       //定时循环任务支持cron表达式  cronExpress  startTime  endTime
       if (Objects.isNull(schedulerAddDTO.getCronExpress())) {
         QuartzInvokeException.build(ResultCode.INVALID_ARGS.getCode(), "触发时间为空");

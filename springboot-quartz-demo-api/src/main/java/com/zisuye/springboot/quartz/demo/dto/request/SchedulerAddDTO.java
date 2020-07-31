@@ -1,5 +1,6 @@
 package com.zisuye.springboot.quartz.demo.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiParam;
@@ -22,18 +23,21 @@ public class SchedulerAddDTO extends SchedulerBaseDTO {
   @JsonProperty("trigger_time")
   @ApiParam(name = "trigger_time", value = "触发时间点 格式：yyyy-MM-dd hh:MM:ss")
   @DateTimeFormat(pattern = "yyyy-MM-dd hh:MM:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd hh:MM:ss")
   private Date triggerTime;
 
   @ApiModelProperty(value = "结束时间点   例如：2019-06-13 18:18:18 注：当job_type=3 必送")
   @JsonProperty("start_time")
   @ApiParam(name = "start_time", value = "结束时间点 格式：yyyy-MM-dd hh:MM:ss")
   @DateTimeFormat(pattern = "yyyy-MM-dd hh:MM:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd hh:MM:ss")
   private Date startTime;
 
   @ApiModelProperty(value = "结束时间点   例如：2019-06-13 18:18:18  注：当job_type=2，3 必送")
   @JsonProperty("end_time")
   @ApiParam(name = "end_time", value = "结束时间点 格式：yyyy-MM-dd hh:MM:ss")
   @DateTimeFormat(pattern = "yyyy-MM-dd hh:MM:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd hh:MM:ss")
   private Date endTime;
 
   @ApiModelProperty(value = "cron表达式 例如  0 0/1 0 * * ?  每一分钟执行一次  注：当job_type=3 必送")
@@ -49,7 +53,7 @@ public class SchedulerAddDTO extends SchedulerBaseDTO {
   @JsonProperty("interval_unit")
   private Integer intervalUnit;
 
-  @ApiModelProperty(value = "server_name  回调地址 例如：mm", required = true)
+  @ApiModelProperty(value = "server_name  回调地址 例如：hello-service或者127.0.0.1：8086", required = true)
   @JsonProperty("server_name")
   @NotNull(message = "回调服务名称")
   private String serverName;

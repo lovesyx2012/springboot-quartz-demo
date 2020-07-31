@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.zisuye.springboot.quartz.demo.QuartzFeignConfiguration

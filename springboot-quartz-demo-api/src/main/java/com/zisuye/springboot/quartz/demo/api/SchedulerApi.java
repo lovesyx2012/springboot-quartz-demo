@@ -25,7 +25,7 @@ public interface SchedulerApi {
 
   @ApiOperation(value = "注册计划任务")
   @PostMapping("/registerScheduler")
-  Result<Boolean> addOnceScheduler(
+  Result<Boolean> registerScheduler(
       @RequestBody @Valid @NotNull SchedulerAddDTO schedulerAddDTO
   );
 

@@ -19,7 +19,7 @@ public class SchedulerController implements SchedulerApi {
   private SchedulerService schedulerService;
 
   @Override
-  public Result<Boolean> addOnceScheduler(@Valid @NotNull SchedulerAddDTO schedulerAddDTO) {
+  public Result<Boolean> registerScheduler(@Valid @NotNull SchedulerAddDTO schedulerAddDTO) {
     return Result.success(schedulerService.registerScheduler(schedulerAddDTO));
   }
 
@@ -54,6 +54,6 @@ public class SchedulerController implements SchedulerApi {
 
   @Override
   public Result<Boolean> querySchedulerIsExist(String jobName, String jobGroupName) {
-    return Result.success(schedulerService.querySchedulerIsExist(jobName,jobGroupName));
+    return Result.success(schedulerService.querySchedulerIsExist(jobName, jobGroupName));
   }
 }
